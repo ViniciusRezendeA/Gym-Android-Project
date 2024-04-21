@@ -3,13 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/trainingFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/ExerciseFragment"
         android:name="com.viniciusRezende.gym.view.exercise.ExerciseFragment"
-        android:label=""
-        tools:layout="@layout/fragment_exercise">
+        android:label="{label}"
+        tools:layout="@layout/recycler_view_fragment">
+        <argument
+            android:name="training"
+            app:argType="com.example.gym.models.TrainingModel"
+             />
+        <argument
+             android:name="label"
+            android:defaultValue="" />
+        <action
+            android:id="@+id/action_ExerciseFragment_to_registerExerciseFragment"
+            app:destination="@id/registerExerciseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trainingFragment"
+        android:name="com.viniciusRezende.gym.view.training.TrainingFragment"
+        android:label="Treinos Disponiveis" >
+        <action
+            android:id="@+id/action_trainingFragment_to_ExerciseFragment"
+            app:destination="@id/ExerciseFragment" />
+        <action
+            android:id="@+id/action_trainingFragment_to_registerTrainingFragment"
+            app:destination="@id/registerTrainingFragment" />
+
 
     </fragment>
+    <fragment
+        android:id="@+id/registerTrainingFragment"
+        android:name="com.viniciusRezende.gym.view.training.RegisterTrainingFragment"
+        android:label="{label}">
+        <argument
+            android:name="label"
+            android:defaultValue="" />
+        <argument
+            android:name="training"
+            app:argType="com.example.gym.models.TrainingModel"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/registerExerciseFragment"
+        android:name="com.viniciusRezende.gym.view.training.RegisterExerciseFragment"
+        android:label="RegisterExerciseFragment" />
 </navigation>

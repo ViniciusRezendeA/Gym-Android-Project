@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.googleService)
     id 'org.jetbrains.kotlin.kapt'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.22'
 }
 
 android {
@@ -11,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.viniciusRezende.gym"
-        minSdk 27
+        minSdk 31
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -60,6 +61,12 @@ dependencies {
     //Firebase
     implementation platform(libs.firebase.bom)
     implementation 'com.google.firebase:firebase-analytics'
+    // Declare the dependency for the Cloud Firestore library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-firestore")
+    // Add the dependency for the Realtime Database library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-database-ktx")
     //Retrofit
     implementation libs.retrofit
     implementation libs.gson
@@ -67,4 +74,9 @@ dependencies {
 
     //ViewModel and Livedata
     implementation libs.androidx.lifecycle.extensions
+    implementation libs.androidx.core.splashscreen
+    implementation libs.recyclerview.swipedecorator
+
+    implementation(libs.kotlinx.serialization.json)
+
 }

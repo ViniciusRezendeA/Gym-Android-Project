@@ -1,9 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Gym" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="backgroundColor">#2c3942</item>
+        <item name="color">@color/white</item>
+        <item name="android:windowSplashScreenBackground">#2c3942</item>
+        <item name="android:windowBackground">#2c3942</item>
     </style>
 
-    <style name="Theme.Gym" parent="Base.Theme.Gym" />
+    <style name="Theme.Gym" parent="Base.Theme.Gym" >
+        <item name="android:windowBackground">#2c3942</item>
+    </style>
 </resources>

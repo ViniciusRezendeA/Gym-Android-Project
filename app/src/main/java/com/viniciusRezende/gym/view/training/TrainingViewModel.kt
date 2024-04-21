@@ -1,22 +1,71 @@
 package com.viniciusRezende.gym.view.training
 
+import android.content.ContentValues
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.viniciusRezende.gym.models.ExerciseModel
-import java.net.URL
+import com.example.gym.models.TrainingModel
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
-class TrainingViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
-    public val traningName = "Treino de bicepis "
-    private val data: ArrayList<ExerciseModel> = ArrayList();
-    fun loadData(){
-        var exerciseModel = ExerciseModel("Agachamento","15 repeticoes", URL("https://assets-global.website-files.com/62d964a7de0430c6f4c45556/62e164d7ff091ae19393b01f_MG2_3238%20(1).jpeg"))
 
-        data.add(exerciseModel)
-        exerciseModel = ExerciseModel("Levantamento de halter","15 repeticoes", URL("https://assets-global.website-files.com/62d964a7de0430c6f4c45556/62e164d7ff091ae19393b01f_MG2_3238%20(1).jpeg"))
-        data.add(exerciseModel)
+class TrainingViewModel :ViewModel(){
+    val db = Firebase.firestore
+    private var data: ArrayList<TrainingModel> = ArrayList();
+    fun getData(callback: (result:ArrayList<TrainingModel>) -> Unit) {
+        data =ArrayList()
+
+
+        db.collection("trainings").get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val timestamp = document.data["date"] as com.google.firebase.Timestamp
+                    val date = timestamp.toDate()
+                    println(date)
+                    data.add(
+                        TrainingModel(
+                            document.id,
+                            document.data["name"].toString(),
+                            document.data["description"].toString(),
+                            date
+                        )
+                    )
+                }
+                callback.invoke(data)
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents.", exception)
+            }
     }
-    fun getData(): ArrayList<ExerciseModel> {
-        loadData()
-        return data;
+
+
+    fun save(training: TrainingModel) {
+        db.collection("trainings")
+            .add(training)
+            .addOnSuccessListener { _ ->
+
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
+    }
+    fun update(training: TrainingModel) {
+        db.collection("trainings")
+            .document(training.id).set(training)
+            .addOnSuccessListener { _ ->
+
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
+    }
+    fun delete(training: TrainingModel) {
+        db.collection("trainings").document(training.id).delete()
+            .addOnSuccessListener { _ ->
+
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
     }
 }
