@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "187131150993",
+    "project_id": "gym-141cf",
+    "storage_bucket": "gym-141cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:187131150993:android:74e3736a7779fd43167530",
+        "android_client_info": {
+          "package_name": "com.viniciusRezende.gym"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbeN_rUckYuMBfNSPdJUPGOCYrHBvchcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
