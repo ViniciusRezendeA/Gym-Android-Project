@@ -4,7 +4,6 @@ package com.viniciusRezende.gym.view.exercise
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +30,7 @@ class RegisterExerciseFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
         val galleryUri = it
         try{
             binding.imageView.setImageURI(galleryUri)
@@ -86,7 +85,6 @@ class RegisterExerciseFragment : Fragment() {
                 binding.observationEditText.text.toString(),
                 null
             )
-            //add logica de salvar
             if (training?.id != null) {
                 viewModel.update(newExercise,drawableConverter()) {
                     returnToLastScreen()
@@ -116,7 +114,7 @@ class RegisterExerciseFragment : Fragment() {
 
 
     private fun returnToLastScreen() {
-        findNavController().popBackStack();
+        findNavController().popBackStack()
     }
 
     override fun onDestroyView() {

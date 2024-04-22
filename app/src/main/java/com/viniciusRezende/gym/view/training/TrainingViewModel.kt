@@ -1,6 +1,5 @@
 package com.viniciusRezende.gym.view.training
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,7 @@ import com.viniciusRezende.gym.models.TrainingModel
 
 class TrainingViewModel :ViewModel(){
     val db = Firebase.firestore
-    private var data: ArrayList<TrainingModel> = ArrayList();
+    private var data: ArrayList<TrainingModel> = ArrayList()
     fun getData(callback: (result:ArrayList<TrainingModel>) -> Unit) {
         data =ArrayList()
 
