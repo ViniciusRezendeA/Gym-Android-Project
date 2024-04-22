@@ -1,6 +1,7 @@
 package com.viniciusRezende.gym.view.exercise
 
 
+
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,14 +14,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gym.models.TrainingModel
 import com.viniciusRezende.gym.R
 import com.viniciusRezende.gym.adapter.ExerciseAdapter
-import com.viniciusRezende.gym.adapter.TrainingAdapter
 import com.viniciusRezende.gym.databinding.RecyclerViewFragmentBinding
-import com.viniciusRezende.gym.models.ExerciseModel
-import com.viniciusRezende.gym.view.exercise.ExerciseViewModel
+import com.viniciusRezende.gym.models.TrainingModel
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import java.net.URL
 
 
 class ExerciseFragment : Fragment()  {
@@ -31,7 +30,7 @@ class ExerciseFragment : Fragment()  {
 
     private var _binding: RecyclerViewFragmentBinding? = null
 
-
+    private lateinit var training: TrainingModel
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -40,10 +39,8 @@ class ExerciseFragment : Fragment()  {
     ): View {
 
         _binding = RecyclerViewFragmentBinding.inflate(inflater, container, false)
-        val training = arguments?.getSerializable("training") as? TrainingModel
-        if (training != null) {
-            viewModel.setTrainingId(training.id)
-        }
+        training = (arguments?.getSerializable("training") as? TrainingModel)!!
+        viewModel.setTrainingId(training.id)
         return binding.root
 
     }
@@ -52,11 +49,13 @@ class ExerciseFragment : Fragment()  {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         sendToRegisterPage()
+
     }
+
 
     private  fun setupRecyclerView() {
         viewModel.getData{result ->
-            this.exerciseAdapter = ExerciseAdapter({ sendToExercisePage(it) }, result)
+            this.exerciseAdapter = ExerciseAdapter( result)
             binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
             binding.recyclerView.adapter = exerciseAdapter
             enableSwipeToDeleteAndUpdate()
@@ -67,20 +66,16 @@ class ExerciseFragment : Fragment()  {
     private fun sendToRegisterPage() {
         binding.addButton.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("label", "Registrar Treino")
+            bundle.putString("label", "Registrar Exercicio")
+            bundle.putSerializable("training",training)
             findNavController().navigate(
-                R.id.action_trainingFragment_to_registerTrainingFragment,
+                R.id.action_ExerciseFragment_to_registerExerciseFragment,
                 bundle
             )
         }
     }
 
-    private fun sendToExercisePage(exercise: ExerciseModel) {
-        val bundle = Bundle()
-        bundle.putString("label", exercise.name)
 
-        findNavController().navigate(R.id.action_trainingFragment_to_ExerciseFragment, bundle)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -151,16 +146,17 @@ class ExerciseFragment : Fragment()  {
 
                     val bundle = Bundle()
                     bundle.putString("label", "Atualizar Exercicio")
-                    bundle.putSerializable("training",exerciseAdapter.getData()[position])
+                    bundle.putSerializable("training",training)
+                    bundle.putSerializable("exercise",exerciseAdapter.getData()[position])
                     findNavController().navigate(
-                        R.id.action_trainingFragment_to_registerTrainingFragment,
+                        R.id.action_ExerciseFragment_to_registerExerciseFragment,
                         bundle
                     )
                 } else {
                     //delete
                     viewModel.delete(exerciseAdapter.getData()[position])
                     viewModel.getData{result ->
-                        this@ExerciseFragment.exerciseAdapter = ExerciseAdapter({ sendToExercisePage(it) }, result)
+                        this@ExerciseFragment.exerciseAdapter = ExerciseAdapter(result)
                         binding.recyclerView.layoutManager = LinearLayoutManager(this@ExerciseFragment.context)
                         binding.recyclerView.adapter = exerciseAdapter
                     }                }

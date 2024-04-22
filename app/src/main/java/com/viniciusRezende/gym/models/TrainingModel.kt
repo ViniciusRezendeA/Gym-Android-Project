@@ -1,4 +1,4 @@
-package com.example.gym.models
+package com.viniciusRezende.gym.models
 
 import java.io.Serializable
 import java.util.Date

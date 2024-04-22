@@ -9,20 +9,15 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gym.models.TrainingModel
 import com.viniciusRezende.gym.R
 import com.viniciusRezende.gym.adapter.TrainingAdapter
 import com.viniciusRezende.gym.databinding.RecyclerViewFragmentBinding
+import com.viniciusRezende.gym.models.TrainingModel
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
 
 class TrainingFragment : Fragment()  {
@@ -76,7 +71,7 @@ class TrainingFragment : Fragment()  {
     private fun sendToExercisePage(training: TrainingModel) {
         val bundle = Bundle()
         bundle.putString("label", training.name)
-
+        bundle.putSerializable("training",training)
         findNavController().navigate(R.id.action_trainingFragment_to_ExerciseFragment, bundle)
     }
 

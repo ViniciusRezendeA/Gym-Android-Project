@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.gym.models.TrainingModel
 import com.viniciusRezende.gym.databinding.TrainingCardBinding
-import kotlinx.coroutines.Deferred
+import com.viniciusRezende.gym.models.TrainingModel
 
 
 class TrainingAdapter(

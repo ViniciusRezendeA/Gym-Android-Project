@@ -4,9 +4,9 @@ import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.gym.models.TrainingModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import com.viniciusRezende.gym.models.TrainingModel
 
 
 class TrainingViewModel :ViewModel(){

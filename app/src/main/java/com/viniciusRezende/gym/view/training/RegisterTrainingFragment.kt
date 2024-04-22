@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.gym.models.TrainingModel
+import com.viniciusRezende.gym.R
 import com.viniciusRezende.gym.databinding.FragmentRegisterTrainingBinding
+import com.viniciusRezende.gym.models.TrainingModel
 import java.time.Instant
 import java.util.Date
 
@@ -73,7 +74,7 @@ class RegisterTrainingFragment : Fragment() {
 
                 descriptionEditText.setText(training.description)
                 nameEditText.setText(training.name)
-                sendButton.setText("Atualizar")
+                sendButton.setText(R.string.atualizar)
             }
         }
     }

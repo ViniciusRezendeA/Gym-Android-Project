@@ -12,10 +12,9 @@
         tools:layout="@layout/recycler_view_fragment">
         <argument
             android:name="training"
-            app:argType="com.example.gym.models.TrainingModel"
-             />
+            app:argType="com.viniciusRezende.gym.models.TrainingModel" />
         <argument
-             android:name="label"
+            android:name="label"
             android:defaultValue="" />
         <action
             android:id="@+id/action_ExerciseFragment_to_registerExerciseFragment"
@@ -24,7 +23,7 @@
     <fragment
         android:id="@+id/trainingFragment"
         android:name="com.viniciusRezende.gym.view.training.TrainingFragment"
-        android:label="Treinos Disponiveis" >
+        android:label="Treinos Disponiveis">
         <action
             android:id="@+id/action_trainingFragment_to_ExerciseFragment"
             app:destination="@id/ExerciseFragment" />
@@ -43,11 +42,20 @@
             android:defaultValue="" />
         <argument
             android:name="training"
-            app:argType="com.example.gym.models.TrainingModel"
-            />
+            app:argType="com.viniciusRezende.gym.models.TrainingModel" />
     </fragment>
     <fragment
         android:id="@+id/registerExerciseFragment"
-        android:name="com.viniciusRezende.gym.view.training.RegisterExerciseFragment"
-        android:label="RegisterExerciseFragment" />
+        android:name="com.viniciusRezende.gym.view.exercise.RegisterExerciseFragment"
+        android:label="{label}">
+        <argument
+            android:name="label"
+            android:defaultValue="" />
+        <argument
+            android:name="training"
+            app:argType="com.viniciusRezende.gym.models.TrainingModel" />
+        <argument
+            android:name="exercise"
+            app:argType="com.viniciusRezende.gym.models.ExerciseModel" />
+    </fragment>
 </navigation>

@@ -51,7 +51,7 @@
         android:layout_height="5dp"
         android:layout_marginBottom="0dp"
         android:background="?android:attr/listDivider"
-        android:backgroundTint="#FFFFFF"
+        android:backgroundTint="#b7431e"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

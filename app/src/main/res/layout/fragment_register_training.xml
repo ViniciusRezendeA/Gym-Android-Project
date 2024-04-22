@@ -10,7 +10,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Informe o nome do Treino"
+        android:text="@string/informe_o_nome_do_treino"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
-        android:text="Informe a descrição do Treino"
+        android:text="@string/informe_a_descri_o_do_treino"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
@@ -44,5 +44,5 @@
         android:id="@+id/sendButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cadastrar" />
+        android:text="@string/cadastrar" />
 </LinearLayout>
