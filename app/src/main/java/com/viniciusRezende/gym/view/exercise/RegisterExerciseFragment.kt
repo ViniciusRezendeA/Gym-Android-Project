@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.ProgressBar
 import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -95,8 +96,8 @@ class RegisterExerciseFragment : Fragment() {
                     .isNotEmpty() && binding.observationEditText.text.toString()
                     .isNotEmpty()
             ) {
-                binding.shadowView.visibility = View.VISIBLE
-                binding.progressBar.visibility = View.VISIBLE
+                activity?.findViewById<View>(R.id.shadowView)?.visibility= View.VISIBLE
+                activity?.findViewById<ProgressBar>(R.id.progressBar)?.visibility= View.VISIBLE
                 val newExercise = ExerciseModel(
                     id,
                     binding.nameEditText.text.toString(),
@@ -138,8 +139,8 @@ class RegisterExerciseFragment : Fragment() {
 
 
     private fun returnToLastScreen() {
-        binding.shadowView.visibility = View.GONE
-        binding.progressBar.visibility = View.GONE
+        activity?.findViewById<View>(R.id.shadowView)?.visibility= View.GONE
+        activity?.findViewById<ProgressBar>(R.id.progressBar)?.visibility= View.GONE
         findNavController().popBackStack()
     }
 

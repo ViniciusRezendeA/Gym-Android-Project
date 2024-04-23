@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -40,9 +41,19 @@ class RegisterTrainingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupButton()
+        setupTextField()
         training = arguments?.getSerializable("training") as? TrainingModel
         if (training != null) {
             setupUpdateScreen()
+        }
+    }
+
+    private fun setupTextField() {
+        binding.nameEditText.setOnEditorActionListener { _, _, _ ->
+            binding.descriptionEditText.requestFocus()
+        }
+        binding.descriptionEditText.setOnEditorActionListener { _, _, _ ->
+            binding.sendButton.requestFocus()
         }
     }
 
@@ -57,8 +68,8 @@ class RegisterTrainingFragment : Fragment() {
                     .isNotEmpty() && binding.descriptionEditText.text.toString()
                     .isNotEmpty()
             ) {
-                binding.shadowView.visibility = View.VISIBLE
-                binding.progressBar.visibility = View.VISIBLE
+                activity?.findViewById<View>(R.id.shadowView)?.visibility= View.VISIBLE
+                activity?.findViewById<ProgressBar>(R.id.progressBar)?.visibility= View.VISIBLE
                 val newTraining = TrainingModel(
                     id,
                     binding.nameEditText.text.toString(),
@@ -96,8 +107,9 @@ class RegisterTrainingFragment : Fragment() {
 
 
     private fun returnToLastScreen() {
-        binding.shadowView.visibility = View.GONE
-        binding.progressBar.visibility = View.GONE
+        activity?.findViewById<View>(R.id.shadowView)?.visibility= View.GONE
+        activity?.findViewById<ProgressBar>(R.id.progressBar)?.visibility= View.GONE
+
         findNavController().popBackStack()
     }
 
