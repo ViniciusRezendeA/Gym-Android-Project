@@ -29,7 +29,6 @@
         android:layout_height="54dp"
         android:backgroundTint="#f99c4e"
         android:contentDescription="@string/adicione"
-        android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
