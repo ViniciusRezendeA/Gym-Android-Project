@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -52,19 +53,32 @@ class RegisterTrainingFragment : Fragment() {
                 id = training!!.id
             }
 
-            val newTraining = TrainingModel(
-                id,
-                binding.nameEditText.text.toString(),
-                binding.descriptionEditText.text.toString(),
-                Date.from(Instant.now())
-            )
-            //add logica de salvar
-            if (training?.id != null) {
-                viewModel.update(newTraining)
+            if (binding.nameEditText.text.toString()
+                    .isNotEmpty() && binding.descriptionEditText.text.toString()
+                    .isNotEmpty()
+            ) {
+                binding.shadowView.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.VISIBLE
+                val newTraining = TrainingModel(
+                    id,
+                    binding.nameEditText.text.toString(),
+                    binding.descriptionEditText.text.toString(),
+                    Date.from(Instant.now())
+                )
+                if (training?.id != null) {
+
+                    viewModel.update(newTraining) {
+                        returnToLastScreen()
+                    }
+                } else {
+
+                    viewModel.save(newTraining) {
+                        returnToLastScreen()
+                    }
+                }
             } else {
-                viewModel.save(newTraining)
+                Toast.makeText(requireContext(), "Complete os campos", Toast.LENGTH_LONG).show()
             }
-            returnToLastScreen()
         }
     }
 
@@ -82,7 +96,9 @@ class RegisterTrainingFragment : Fragment() {
 
 
     private fun returnToLastScreen() {
-        findNavController().popBackStack();
+        binding.shadowView.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
+        findNavController().popBackStack()
     }
 
     override fun onDestroyView() {

@@ -38,21 +38,21 @@ class TrainingViewModel :ViewModel(){
     }
 
 
-    fun save(training: TrainingModel) {
+    fun save(training: TrainingModel, callback: (result: Boolean) -> Unit) {
         db.collection("trainings")
             .add(training)
             .addOnSuccessListener { _ ->
-
+                callback.invoke(true)
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)
             }
     }
-    fun update(training: TrainingModel) {
+    fun update(training: TrainingModel, callback: (result: Boolean) -> Unit) {
         db.collection("trainings")
             .document(training.id).set(training)
             .addOnSuccessListener { _ ->
-
+                callback.invoke(true)
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)

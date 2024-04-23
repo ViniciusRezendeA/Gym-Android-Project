@@ -3,10 +3,12 @@ package com.viniciusRezende.gym.view.exercise
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -32,13 +34,14 @@ class RegisterExerciseFragment : Fragment() {
 
     private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
         val galleryUri = it
-        try{
+        try {
             binding.imageView.setImageURI(galleryUri)
-        }catch(e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,7 +60,7 @@ class RegisterExerciseFragment : Fragment() {
         if (training != null) {
             viewModel.setTrainingId(training!!.id)
         }
-         exercise = arguments?.getSerializable("exercise") as? ExerciseModel
+        exercise = arguments?.getSerializable("exercise") as? ExerciseModel
         if (exercise != null) {
             setupUpdateScreen()
         }
@@ -74,31 +77,44 @@ class RegisterExerciseFragment : Fragment() {
 
     private fun setupButton() {
         binding.sendButton.setOnClickListener {
+
             var id = ""
             if (training?.id != null) {
                 id = training!!.id
             }
 
-            val newExercise = ExerciseModel(
-                id,
-                binding.nameEditText.text.toString(),
-                binding.observationEditText.text.toString(),
-                null
-            )
-            if (training?.id != null) {
-                viewModel.update(newExercise,drawableConverter()) {
-                    returnToLastScreen()
+            if (binding.nameEditText.text.toString()
+                    .isNotEmpty() && binding.observationEditText.text.toString()
+                    .isNotEmpty()
+            ) {
+                binding.shadowView.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.VISIBLE
+                val newExercise = ExerciseModel(
+                    id,
+                    binding.nameEditText.text.toString(),
+                    binding.observationEditText.text.toString(),
+                    null
+                )
+                if (training?.id != null) {
+
+                    viewModel.update(newExercise, drawableConverter()) {
+                        returnToLastScreen()
+                    }
+                } else {
+
+                    viewModel.save(newExercise, drawableConverter()) {
+                        returnToLastScreen()
+                    }
                 }
             } else {
-                viewModel.save(newExercise,drawableConverter()) {
-                    returnToLastScreen()
-                }
+                Toast.makeText(requireContext(), "Complete os campos", Toast.LENGTH_LONG).show()
             }
         }
-        binding.getImageButton.setOnClickListener {
+        binding.imageView.setOnClickListener {
             galleryLauncher.launch("image/*")
         }
     }
+
     private fun setupUpdateScreen() {
         exercise?.let { exercise ->
             binding.apply {
@@ -112,8 +128,9 @@ class RegisterExerciseFragment : Fragment() {
     }
 
 
-
     private fun returnToLastScreen() {
+        binding.shadowView.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
         findNavController().popBackStack()
     }
 

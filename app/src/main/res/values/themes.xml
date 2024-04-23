@@ -10,4 +10,8 @@
     <style name="Theme.Gym" parent="Base.Theme.Gym" >
         <item name="android:windowBackground">#2c3942</item>
     </style>
+    <style name="MaterialToolbar">
+        <item name="background">@color/ic_launcher_background</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
 </resources>
