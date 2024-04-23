@@ -3,11 +3,13 @@ package com.viniciusRezende.gym.view.exercise
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -19,6 +21,7 @@ import com.viniciusRezende.gym.databinding.FragmentRegisterExerciseBinding
 import com.viniciusRezende.gym.models.ExerciseModel
 import com.viniciusRezende.gym.models.TrainingModel
 import java.io.ByteArrayOutputStream
+import kotlin.math.log
 
 
 class RegisterExerciseFragment : Fragment() {
@@ -56,6 +59,7 @@ class RegisterExerciseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupButton()
+        setupTextField()
         training = arguments?.getSerializable("training") as? TrainingModel
         if (training != null) {
             viewModel.setTrainingId(training!!.id)
@@ -74,15 +78,19 @@ class RegisterExerciseFragment : Fragment() {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         return baos.toByteArray()
     }
-
+    private fun setupTextField() {
+        binding.nameEditText.setOnEditorActionListener { _, _, _ ->
+            binding.observationEditText.requestFocus()
+        }
+    }
     private fun setupButton() {
         binding.sendButton.setOnClickListener {
 
-            var id = ""
-            if (training?.id != null) {
-                id = training!!.id
+            var id: String? = exercise?.id
+            if(id == null){
+                id = ""
             }
-
+            Log.d("tap",id)
             if (binding.nameEditText.text.toString()
                     .isNotEmpty() && binding.observationEditText.text.toString()
                     .isNotEmpty()
@@ -95,7 +103,8 @@ class RegisterExerciseFragment : Fragment() {
                     binding.observationEditText.text.toString(),
                     null
                 )
-                if (training?.id != null) {
+
+                if (!exercise?.id.isNullOrEmpty()) {
 
                     viewModel.update(newExercise, drawableConverter()) {
                         returnToLastScreen()

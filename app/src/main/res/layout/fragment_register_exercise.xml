@@ -38,7 +38,7 @@
                 android:layout_marginTop="10dp"
                 android:scaleType="fitCenter"
 
-                android:src="@drawable/common_google_signin_btn_text_light_normal" />
+                android:src="@drawable/default_image" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -57,6 +57,9 @@
                 android:layout_marginTop="10dp"
                 android:lines="1"
                 android:maxLines="1"
+                android:maxLength="25"
+                android:inputType="text"
+                android:nextFocusForward="@id/observationEditText"
                 android:textColor="@color/white" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -74,7 +77,7 @@
                 android:layout_marginTop="10dp"
                 android:maxHeight="200dp"
                 android:minHeight="48dp"
-
+                android:inputType="textMultiLine"
                 android:textColor="@color/white" />
 
             <com.google.android.material.button.MaterialButton
