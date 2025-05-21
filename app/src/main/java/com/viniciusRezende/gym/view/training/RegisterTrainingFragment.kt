@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.viniciusRezende.gym.R
 import com.viniciusRezende.gym.databinding.FragmentRegisterTrainingBinding
 import com.viniciusRezende.gym.models.TrainingModel
+import com.viniciusRezende.gym.view.MainActivity
 import java.time.Instant
 import java.util.Date
 
@@ -58,18 +59,18 @@ class RegisterTrainingFragment : Fragment() {
     }
 
     private fun setupButton() {
+        val activity = activity as MainActivity
         binding.sendButton.setOnClickListener {
             var id = ""
             if (training?.id != null) {
                 id = training!!.id
             }
-
+            activity.setupLoading(true)
             if (binding.nameEditText.text.toString()
                     .isNotEmpty() && binding.descriptionEditText.text.toString()
                     .isNotEmpty()
             ) {
-                activity?.findViewById<View>(R.id.shadowView)?.visibility= View.VISIBLE
-                activity?.findViewById<ProgressBar>(R.id.progressBar)?.visibility= View.VISIBLE
+
                 val newTraining = TrainingModel(
                     id,
                     binding.nameEditText.text.toString(),
@@ -79,12 +80,23 @@ class RegisterTrainingFragment : Fragment() {
                 if (training?.id != null) {
 
                     viewModel.update(newTraining) {
-                        returnToLastScreen()
+                        activity.setupLoading(false)
+                        if(!it) {
+                            Toast.makeText(requireContext(),"Sistema indiponivel, tente novamente mais tarde", Toast.LENGTH_LONG).show()
+                        } else {
+                            returnToLastScreen()
+                        }
                     }
                 } else {
 
                     viewModel.save(newTraining) {
-                        returnToLastScreen()
+                        activity.setupLoading(false)
+                        if(!it) {
+                            Toast.makeText(requireContext(),"Sistema indiponivel, tente novamente mais tarde", Toast.LENGTH_LONG).show()
+                        } else {
+                            returnToLastScreen()
+                        }
+
                     }
                 }
             } else {

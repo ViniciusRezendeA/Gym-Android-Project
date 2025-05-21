@@ -33,7 +33,7 @@ class TrainingViewModel :ViewModel(){
                 callback.invoke(data)
             }
             .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
+                Log.e(TAG, "Error getting documents.", exception)
             }
     }
 
@@ -45,7 +45,8 @@ class TrainingViewModel :ViewModel(){
                 callback.invoke(true)
             }
             .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
+                Log.e(TAG, "Error adding document", e)
+                callback.invoke(false)
             }
     }
     fun update(training: TrainingModel, callback: (result: Boolean) -> Unit) {
@@ -55,7 +56,7 @@ class TrainingViewModel :ViewModel(){
                 callback.invoke(true)
             }
             .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
+                Log.e(TAG, "Error adding document", e)
             }
     }
     fun delete(training: TrainingModel) {
@@ -64,7 +65,7 @@ class TrainingViewModel :ViewModel(){
 
             }
             .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
+                Log.e(TAG, "Error adding document", e)
             }
     }
 }

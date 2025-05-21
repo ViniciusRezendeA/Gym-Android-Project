@@ -43,6 +43,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/black_"
+        android:clickable="true"
+        android:focusable="true"
         android:visibility="gone"
         app:guidelineUseRtl="true"
         app:layout_constraintBottom_toBottomOf="parent"

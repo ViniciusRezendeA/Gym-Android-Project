@@ -1,6 +1,8 @@
 package com.viniciusRezende.gym.view
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -28,7 +30,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+     fun setupLoading(start: Boolean) {
+        binding.shadowView.visibility= if(start) {
+            View.VISIBLE} else {
+            View.GONE
+        }
+        binding.progressBar.visibility= if(start) {
+            View.VISIBLE} else {
+            View.GONE
+        }
+    }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
